@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GaragePro - Home</title>
+  <style>
+    body {
+      background: 
+        linear-gradient(135deg, rgba(176,190,197,0.80) 0%, rgba(120,144,156,0.80) 100%),
+        url('https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1200&q=80') no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .navbar {
+      position: absolute;
+      top: 24px;
+      left: 32px;
+      z-index: 10;
+    }
+    .menu-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      gap: 7px;
+    }
+    .menu-bar {
+      width: 30px;
+      height: 4px;
+      background: #2c3e50;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+    .menu-dropdown {
+      display: none;
+      position: absolute;
+      top: 50px;
+      left: 0;
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 2px 8px rgba(44,62,80,0.15);
+      border-radius: 8px;
+      min-width: 160px;
+      z-index: 20;
+      flex-direction: column;
+      padding: 0.5em 0;
+    }
+    .menu-dropdown.show {
+      display: flex;
+    }
+    .menu-item {
+      padding: 1em 1.5em;
+      color: #2c3e50;
+      cursor: pointer;
+      font-size: 1.1em;
+      border: none;
+      background: none;
+      text-align: left;
+      transition: background 0.2s;
+    }
+    .menu-item:hover {
+      background: #e3eaf0;
+    }
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 0.5em;
+      z-index: 1;
+      text-shadow: 0 2px 8px rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.7);
+      padding: 0.5em 1em;
+      border-radius: 10px;
+    }
+    h2 {
+      margin-bottom: 2em;
+      z-index: 1;
+      text-shadow: 0 2px 8px rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.7);
+      padding: 0.3em 1em;
+      border-radius: 10px;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      align-items: center;
+      z-index: 1;
+    }
+    .login-btn {
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      background: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+      z-index: 1;
+      box-shadow: 0 2px 8px rgba(44,62,80,0.15);
+      width: 220px;
+    }
+    .login-btn.admin {
+      background: #3498db;
+    }
+    .login-btn:hover {
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="menu-icon" onclick="toggleMenu()">
+      <div class="menu-bar"></div>
+      <div class="menu-bar"></div>
+      <div class="menu-bar"></div>
+    </div>
+    <div id="menuDropdown" class="menu-dropdown">
+      <button class="menu-item" onclick="troubleshoot()">Troubleshoot</button>
+    </div>
+  </div>
+  <h1>GaragePro</h1>
+  <h2>Who is using GaragePro?</h2>
+  <div class="options">
+    <button class="login-btn customer" onclick="goToCustomerLogin()">Customer</button>
+    <button class="login-btn admin" onclick="goToAdminLogin()">Garage Admin</button>
+  </div>
+  <script>
+    function goToCustomerLogin() {
+      window.location.href = "customer-login.html";
+    }
+    function goToAdminLogin() {
+      window.location.href = "admin-login.html";
+    }
+    function troubleshoot() {
+      alert('Troubleshoot option selected.\nPlease contact support or check the FAQ.');
+      // You can redirect to a troubleshoot page if available
+      // window.location.href = "troubleshoot.html";
+    }
+    function toggleMenu() {
+      var dropdown = document.getElementById('menuDropdown');
+      dropdown.classList.toggle('show');
+      // Close dropdown if clicked outside
+      document.addEventListener('click', function handler(e) {
+        if (!dropdown.contains(e.target) && !e.target.classList.contains('menu-icon')) {
+          dropdown.classList.remove('show');
+          document.removeEventListener('click', handler);
+        }
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GaragePro - View Bill</title>
+  <style>
+    body {
+      background: 
+        linear-gradient(135deg, rgba(176,190,197,0.80) 0%, rgba(120,144,156,0.80) 100%),
+        url('https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1200&q=80') no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .bill-container {
+      background: rgba(255,255,255,0.92);
+      margin-top: 80px;
+      padding: 2em 2.5em;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(44,62,80,0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 320px;
+      z-index: 1;
+    }
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 1.2em;
+      text-shadow: 0 2px 8px rgba(255,255,255,0.7);
+    }
+    .bill-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.5em;
+    }
+    .bill-table th, .bill-table td {
+      border: 1px solid #b0bec5;
+      padding: 0.7em;
+      text-align: left;
+      background: #f4f6fa;
+    }
+    .bill-table th {
+      background: #e3eaf0;
+      color: #2c3e50;
+    }
+    .total-bill {
+      margin-top: 1em;
+      font-size: 1.2em;
+      color: #27ae60;
+      font-weight: bold;
+      background: #e3f6e8;
+      padding: 0.7em 1em;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .back-btn {
+      position: absolute;
+      top: 24px;
+      right: 32px;
+      z-index: 20;
+      background: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.7em 1.4em;
+      font-size: 1em;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(44,62,80,0.15);
+      transition: background 0.2s;
+    }
+    .back-btn:hover {
+      background: #217dbb;
+    }
+    .dashboard-btn {
+      position: absolute;
+      top: 24px;
+      right: 150px;
+      z-index: 20;
+      background: #2ecc71;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.7em 1.4em;
+      font-size: 1em;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(44,62,80,0.15);
+      transition: background 0.2s;
+    }
+    .dashboard-btn:hover {
+      background: #27ae60;
+    }
+  </style>
+</head>
+<body>
+  <button class="back-btn" onclick="goBack()">Back</button>
+  <button class="dashboard-btn" onclick="payBill()">Pay Bill</button>
+  <div class="bill-container">
+    <h1>Your Bill</h1>
+    <table class="bill-table">
+      <thead>
+        <tr>
+          <th>Part Name</th>
+          <th>Part Number</th>
+          <th>Part Charges (₹)</th>
+        </tr>
+      </thead>
+      <tbody id="billParts">
+        <!-- Bill items will be shown here -->
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2"><strong>Labour Charges</strong></td>
+          <td id="labourCharges"></td>
+        </tr>
+      </tfoot>
+    </table>
+    <div id="totalBill" class="total-bill"></div>
+  </div>
+  <script>
+    function goBack() {
+      window.location.href = "customer-dashboard.html";
+    }
+    function payBill() {
+      window.location.href = "customer-pay.html";
+    }
+
+    // Example bill data (replace with dynamic data as needed)
+    const billData = {
+      parts: [
+        { name: "Brake Pads", number: "BP123", charge: 1200 },
+        { name: "Oil Filter", number: "OF456", charge: 400 }
+      ],
+      labour: 800
+    };
+
+    function renderBill() {
+      const billParts = document.getElementById('billParts');
+      billParts.innerHTML = '';
+      let partsTotal = 0;
+      billData.parts.forEach(part => {
+        partsTotal += part.charge;
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${part.name}</td>
+          <td>${part.number}</td>
+          <td>₹${part.charge.toFixed(2)}</td>
+        `;
+        billParts.appendChild(row);
+      });
+      document.getElementById('labourCharges').textContent = "₹" + billData.labour.toFixed(2);
+      const total = partsTotal + billData.labour;
+      document.getElementById('totalBill').textContent = "Total Bill: ₹" + total.toFixed(2);
+    }
+
+    renderBill();
+  </script>
+</body>
+</html>
